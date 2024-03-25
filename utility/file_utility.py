@@ -18,7 +18,7 @@ from multiprocessing import Pool
 import numpy as np
 import tqdm
 from Bio import SeqIO, Entrez
-from Bio.Alphabet import generic_dna, generic_protein
+#from Bio.Alphabet import generic_dna, generic_protein
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from scipy import sparse
