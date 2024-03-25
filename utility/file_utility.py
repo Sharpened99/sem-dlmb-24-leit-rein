@@ -16,7 +16,7 @@ import fnmatch
 import os
 from multiprocessing import Pool
 import numpy as np
-import tqdm
+# import tqdm
 from Bio import SeqIO, Entrez
 #from Bio.Alphabet import generic_dna, generic_protein
 from Bio.Seq import Seq
