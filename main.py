@@ -1,4 +1,3 @@
-import pandas as pd
 import torch
 
 from torch import nn
@@ -10,10 +9,37 @@ class MLP(nn.Module):
     def __init__(self):
         super().__init__()
         self.flatten = nn.Flatten()
-        # Create model with specified layers,
+        # Create model with specified layers
         self.linear_relu_stack = nn.Sequential(
-            nn.Linear()
+            nn.Linear(27, 64),
+            nn.ReLU(),
+            nn.Linear(64, 64),
+            nn.ReLU(),
+            nn.Linear(64, 1),
+            nn.Sigmoid()
         )
+
+
+def encode_seq(seq):
+    amino_counts = {
+        char: 0 for char in "abcdefghijklmnopqrstuvwxyz"
+    }
+
+    for character in seq.lower():
+        amino_counts[character] += 1
+
+    ret_list = list(amino_counts.values())
+    ret_list.append(len(seq))
+
+    return ret_list
+
+
+def encode_seq_list(sequence_list):
+    encoded_list = []
+    for seq in sequence_list:
+        encoded_list.append(encode_seq(seq))
+
+    return encoded_list
 
 
 def main():
@@ -27,11 +53,17 @@ def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f'Device: {device}')
 
-    len_train = [len(s) for s in seq_train]
+    # len_train = [len(s) for s in seq_train]
+    # print("max len: {}".format(max(len_train)))
 
-    print("max len: {}".format(max(len_train)))
+    encoded_train = encode_seq_list(seq_train)
+    encoded_test = encode_seq_list(seq_test)
 
-    model = None
+    model = MLP()
+
+    model.to(device)
+
+    model.train()
 
 
 if __name__ == '__main__':
