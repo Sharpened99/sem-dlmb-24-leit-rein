@@ -19,6 +19,11 @@ class MLP(nn.Module):
             nn.Sigmoid()
         )
 
+    def forward(self, x):
+        x = torch.FloatTensor(x)
+        x = self.linear_relu_stack(x)
+        return x
+
 
 def encode_seq(seq):
     amino_counts = {
